@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "extrifitmaterials",
+  "private_key_id": "88c82fe6708e09adbd215c15d87d7ca05a6f8b6c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrdKJew2SHWWfB\nOD61P6QSbd2u5eO7hIbefezyLubUhvCOvsxYL/jWdhs/JzaheaJRrPZLjTTQznG6\nRno4bisihkSQaq52r2b8aojjBYOKFVoP024cx2X+ZIVAAiYsw+RbT8ufMcRMzkmJ\n3efcojD9p7MgcJsbA5WJuoaGZEV5nj+Gx0FGkwfwdH6swQGfFBM9K2VfmUeuHfa3\nBsYbhvlu+G/NPEndwLmEwDAPxgB5vHtII6/mBweSK+sKLlIh/15ODE41nHwCQuZ0\nZ/40SMDTXGbgEGDcjy4/SM/qZufcAoCTZKeIpya4T84greOaxRv37IVC7KjBoNiu\namT2BukpAgMBAAECggEARH0TuyzsBFEHbByOmBIy9RWj/xBf1vEKeufsdZWcqXq5\nrxuyPuvyx6BoI+MDJJ+U4nFn9SgT1/EPZuxuOApx+pmN2+5xgIFybxQTWDREpiz/\nS+EWVDKmoGcA/1+cZjdeCcenPBFCK7gfkg3tZ6n2TezmVegFXVYiLuEuiZKWWgzf\n4+K1qB95R21+iPFSI/nyydtSH66mJ9/mW0ET6NtHINZc6fzKGDTMMPLM/ZuZMGh3\nmgpDSGWO06DVdnPGHgF6sm+N3d2V4qWb1UAXVgD2tH5vO/+rT+973khhg6OihF3M\nwh7/DS17P+AhSqGk6DQuITwVaYzJ8kkuxtuoMdLQTQKBgQDgrPTeGHi1xXh90wGP\nmWe719CxsYCCzzJkYHSnshbCXmYVlutPAetsCQWmjT0e/0G/mD0rDGqSaE+Y5BwF\nY2Z3A8grlTiH3Tq53uXVvmqzUzHFAhdWHWQmQJrNuD0Ze72nYSHzO5lXRZ+z523H\nVn6UTGRcqrRrNnMyvwKIp9aqkwKBgQDDXCry8LhGRJ3ubEj22tnQtEc2fc+k/xeN\n9yyN5CQqT+ACLgHZTD3uqRU8hGWNRdpmPBdSagbH3HvrmGc7rr/vBqciGCg6HqQ6\n1UllXy/2i5Y7PmmfY4rdnZzUQ7wCBx884euLPOxm1KEDFtlg5+JfNgH/GMovQY1f\nXujSwa+m0wKBgQCnKCb6gmx0mJmfy3hy1Sh3ega73ZsGN49/XMAN8BK8w6zhzSn+\n2yfDdibtFlHuGO1a1bJUr+UuTktCLhym6aBXVcn8mwW3F6JUnYCT+Rq7ll8F+xtP\np4hWaWSDP9q9dfHRcRPoOmRIqPU7zShA0ZpVTUyyIRMgXR9yFuiUsYKl3wKBgCZH\nI98wDVsvTKaPrwg3P2BmQmHJ6uqQVOQrHx66Kd/kgKbMru4Nw0DE/nU6F8/DdRR9\nB7DNN4DnkZxK40dNaSwDaLIEe7VPlaw1aEklindLSGdZRkbFsUrU/AqXLvpSvOsn\n9Qf2KvfHB7lcO8GCDdfL9D4wdEUoGfQq24GYE7ujAoGBAIkQT0jEZKp9Cud6YHhY\nsaq77NDxlcWm6LIKD7YhokM7JPSlwPYApiMgjmzrqIg90ieD5BVb8N2X8Qckbqdl\nrT0/MZ9aWeZuxUvC5bE6annGbgqLJUiAyMYKfjk90sz8kLm2/hCWCb2qGIB7E2ls\nI6V4b8Sh8fq6KbH2NRxGQsMU\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-itrt3@extrifitmaterials.iam.gserviceaccount.com",
+  "client_id": "108613402342394861712",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-itrt3%40extrifitmaterials.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
