@@ -3,22 +3,31 @@ const { verifyToken } = require("../services/firebase/index");
 const multer = require("multer");
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/Users/filipvlk/Desktop/ExtrifitMaterialyServer/assetsss");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
+let storage = multer.diskStorage({
+  destination: "./assets",
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
   },
 });
 
-const upload = multer(storage);
+const upload = multer({ storage: storage });
 
 router.post("/upload", upload.single("image"), (req, res) => {
   try {
-    console.log(req.file);
+    console.log(req.file.filename);
 
     res.send("ok").status(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/download/:fileName", (req, res) => {
+  const fileName = req.params.fileName;
+  try {
+    const filePath = __dirname + "/../assets/" + fileName; // Adjust the path accordingly
+
+    res.download(filePath, fileName);
   } catch (error) {
     console.log(error);
   }
