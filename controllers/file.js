@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyToken } = require("../services/firebase/index");
+const { verifyToken, createDoc } = require("../services/firebase/index");
 const multer = require("multer");
 const router = express.Router();
 
@@ -12,15 +12,20 @@ let storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/upload", upload.single("image"), (req, res) => {
-  try {
-    console.log(req.file.filename);
+router.post(
+  "/upload",
+  upload.single("image"),
+  verifyToken,
+  async (req, res) => {
+    try {
+      await createDoc(req.body.name, req.file.filename, req.body.name);
 
-    res.send("ok").status(200);
-  } catch (error) {
-    console.log(error);
+      res.send("ok").status(200);
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 router.get("/download/:fileName", (req, res) => {
   const fileName = req.params.fileName;

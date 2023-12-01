@@ -58,9 +58,20 @@ const getAllUsers = async () => {
   }
 };
 
+const createDoc = async (name, image, text) => {
+  try {
+    db.collection("materials")
+      .add({ name, image, text })
+      .then(() => console.log("ok"));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   verifyToken,
   createUser,
   deleteUser,
+  createDoc,
 };
