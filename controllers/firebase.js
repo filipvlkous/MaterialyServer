@@ -12,16 +12,19 @@ router.get("/test", verifyToken, async (req, res) => {
 });
 
 router.post("/new_user", verifyToken, async (req, res) => {
-  const { email, pass } = req.body.data;
-  const user = createUser(email, pass);
-  console.log(user);
-  res.send("ok").status(200);
+  try {
+    const { email, pass } = req.body.data;
+    await createUser(email, pass);
+    res.send("ok").status(200);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.delete("/delete_user", verifyToken, async (req, res) => {
   const uid = req.body.uid;
   try {
-    deleteUser(uid);
+    await deleteUser(uid);
     res.send("ok").status(200);
   } catch (error) {
     res.send("error", error).status(400);

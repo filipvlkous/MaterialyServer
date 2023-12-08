@@ -1,20 +1,21 @@
 const express = require("express");
-const { verifyToken, createDoc } = require("../services/firebase/index");
-const multer = require("multer");
+const {
+  verifyToken,
+  createDoc,
+  createMultiDocs,
+  deleteImageFb,
+} = require("../services/firebase/index");
+const {
+  deleteImage,
+  createDockMiddleware,
+  uploadSingle,
+  uploadArray,
+} = require("../services/file/index");
 const router = express.Router();
-
-let storage = multer.diskStorage({
-  destination: "./assets",
-  filename: function (req, file, callback) {
-    callback(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
 
 router.post(
   "/upload",
-  upload.single("image"),
+  uploadSingle.single("image"),
   verifyToken,
   async (req, res) => {
     try {
@@ -27,7 +28,22 @@ router.post(
   }
 );
 
-router.get("/download/:fileName", (req, res) => {
+router.post(
+  "/uploadImages",
+  createDockMiddleware,
+  verifyToken,
+  uploadArray.array("images"),
+  async (req, res) => {
+    try {
+      await createMultiDocs(req.query.key, req.files);
+      res.send("ok").status(200);
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+router.get("/download/:fileName", verifyToken, (req, res) => {
   const fileName = req.params.fileName;
   try {
     const filePath = __dirname + "/../assets/" + fileName; // Adjust the path accordingly
@@ -37,5 +53,22 @@ router.get("/download/:fileName", (req, res) => {
     console.log(error);
   }
 });
+
+router.delete(
+  "/deleteImage/:id/:name/:idDoc",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const name = req.params.name;
+      const idDoc = req.params.idDoc;
+      deleteImage(id, name);
+      await deleteImageFb(id, idDoc);
+      res.status(200).send("Image deleted successfully");
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 module.exports = router;
