@@ -4,8 +4,10 @@ const {
   createDoc,
   createMultiDocs,
   deleteImageFb,
+  deleteProductFb,
 } = require("../services/firebase/index");
 const {
+  deleteProduct,
   deleteImage,
   createDockMiddleware,
   uploadSingle,
@@ -54,21 +56,30 @@ router.get("/download/:fileName", verifyToken, (req, res) => {
   }
 });
 
-router.delete(
-  "/deleteImage/:id/:name/:idDoc",
-  verifyToken,
-  async (req, res) => {
-    try {
-      const id = req.params.id;
-      const name = req.params.name;
-      const idDoc = req.params.idDoc;
-      deleteImage(id, name);
-      await deleteImageFb(id, idDoc);
-      res.status(200).send("Image deleted successfully");
-    } catch (error) {
-      throw error;
-    }
+router.delete("/deleteImage", verifyToken, async (req, res) => {
+  try {
+    const id = req.query.id;
+    const name = req.query.name;
+    const idDoc = req.query.doc;
+
+    deleteImage(id, name);
+    await deleteImageFb(id, idDoc);
+    res.status(200).send("Image deleted successfully");
+  } catch (error) {
+    throw error;
   }
-);
+});
+
+router.delete("/deleteProduct", verifyToken, async (req, res) => {
+  try {
+    const id = req.query.id;
+    const image = req.query.image;
+    deleteProduct(id, image);
+    await deleteProductFb(id);
+    res.status(200).send("Image deleted successfully");
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = router;

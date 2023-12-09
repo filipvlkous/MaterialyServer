@@ -93,6 +93,14 @@ const deleteImageFb = async (id, idDoc) => {
   }
 };
 
+const deleteProductFb = async (id) => {
+  try {
+    await db.collection("materials").doc(id).delete();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   deleteImageFb,
   createMultiDocs,
@@ -101,4 +109,5 @@ module.exports = {
   createUser,
   deleteUser,
   createDoc,
+  deleteProductFb,
 };

@@ -22,28 +22,30 @@ let storageArray = multer.diskStorage({
 const uploadSingle = multer({ storage: storage });
 const uploadArray = multer({ storage: storageArray });
 
-const createDockMiddleware = (req, res, next) => {
+const createDockMiddleware = async (req, res, next) => {
   try {
     const { key } = req.query;
     const productDirectory = "./assets/" + key;
-    fs.access(productDirectory, (err) => {
-      if (err) {
-        // Directory doesn't exist, create it
-        fs.mkdir(productDirectory, (err) => {
-          if (err) {
-            console.error(`Error creating directory: ${err}`);
-          } else {
-            console.log(`Directory created.`);
-          }
-        });
-      } else {
-        console.log(`Directory already exists.`);
+
+    // Use fs.promises for asynchronous file system operations
+    try {
+      await fs.promises.access(productDirectory);
+      console.log(`Directory already exists.`);
+    } catch (err) {
+      // Directory doesn't exist, create it
+      try {
+        await fs.promises.mkdir(productDirectory);
+        console.log(`Directory created.`);
+      } catch (mkdirErr) {
+        console.error(`Error creating directory: ${mkdirErr}`);
+        return res.status(500).json({ error: "Error creating directory" });
       }
-    });
+    }
 
     next();
   } catch (e) {
-    console.log(e);
+    console.error(e);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -58,7 +60,30 @@ const deleteImage = (id, name) => {
   });
 };
 
+const deleteProduct = (id, image) => {
+  const filePath = "./assets/" + image;
+
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(`Error deleting file: ${err}`);
+    } else {
+      console.log("File deleted successfully");
+    }
+  });
+
+  const dirPath = "./assets/" + id;
+
+  fs.rm(dirPath, { recursive: true }, (err) => {
+    if (err) {
+      console.error(`Error deleting directory: ${err}`);
+    } else {
+      console.log("Directory deleted successfully");
+    }
+  });
+};
+
 module.exports = {
+  deleteProduct,
   deleteImage,
   createDockMiddleware,
   uploadSingle,
