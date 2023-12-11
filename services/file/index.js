@@ -11,11 +11,18 @@ let storage = multer.diskStorage({
 let storageArray = multer.diskStorage({
   destination: async function (req, file, callback) {
     const { key } = req.query;
+    const path = "./assets/" + key;
 
-    callback(null, "./assets/" + key);
+    callback(null, path);
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname);
+    let uploadedFileName;
+    if (!fs.existsSync) {
+      uploadedFileName = Date.now() + "." + file.originalname;
+    } else {
+      uploadedFileName = file.originalname;
+    }
+    callback(null, uploadedFileName);
   },
 });
 

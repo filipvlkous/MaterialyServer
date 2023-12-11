@@ -13,6 +13,7 @@ const {
   uploadSingle,
   uploadArray,
 } = require("../services/file/index");
+const e = require("express");
 const router = express.Router();
 
 router.post(
@@ -21,7 +22,7 @@ router.post(
   verifyToken,
   async (req, res) => {
     try {
-      await createDoc(req.body.name, req.file.filename, req.body.name);
+      await createDoc(req.body.name, req.file.filename, req.body.text);
 
       res.send("ok").status(200);
     } catch (error) {
@@ -45,12 +46,22 @@ router.post(
   }
 );
 
-router.get("/download/:fileName", verifyToken, (req, res) => {
-  const fileName = req.params.fileName;
+router.get("/download/:filename", (req, res) => {
   try {
-    const filePath = __dirname + "/../assets/" + fileName; // Adjust the path accordingly
-
-    res.download(filePath, fileName);
+    const id = req.query.id;
+    const filePath = __dirname + `/../assets/${id}/${req.params.filename}`;
+    res.download(
+      filePath,
+      req.params.filename, // Remember to include file extension
+      (err) => {
+        if (err) {
+          res.send({
+            error: err,
+            msg: "Problem downloading the file",
+          });
+        }
+      }
+    );
   } catch (error) {
     console.log(error);
   }
