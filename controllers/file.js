@@ -22,11 +22,15 @@ router.post(
   verifyToken,
   async (req, res) => {
     try {
-      await createDoc(req.body.name, req.file.filename, req.body.text);
+      const { name, text } = req.body;
+      const filename = req.file.filename;
 
-      res.send("ok").status(200);
+      await createDoc(name, filename, text);
+
+      res.status(200).send("ok");
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
   }
 );

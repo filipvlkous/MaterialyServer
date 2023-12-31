@@ -10,13 +10,13 @@ const verifyToken = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith("Bearer ")) {
-      return res.status(401).json({ error: "Unauthorized3d" });
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
     const token = authorization.split("Bearer ")[1];
     const decodedToken = await auth.verifyIdToken(token);
-    if (decodedToken.uid !== "buIKS82mh8OCVnzZ4lbsf0zJ5PQ2")
-      return res.status(402).json({ error: "Unauthorizedddd" });
+    if (decodedToken.uid !== "aUWlfwqTs2OcpK6iKJJGuFpM1l72")
+      return res.status(402).json({ error: "Unauthorizedd" });
 
     req.user = decodedToken; // Attach the user information to the request object
     next();
@@ -25,23 +25,33 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-const createUser = async (email, pass) => {
+const createUser = async (email, pass, name) => {
   try {
-    return await auth.createUser({
+    // Create user using auth
+    await auth.createUser({
       email: email,
       password: pass,
       disabled: false,
     });
+
+    // Add user details to the 'users' collection in the database
+    const result = await db.collection("users").add({ name, email });
+
+    return result;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
-const deleteUser = async (uid) => {
+const deleteUser = async (id, email) => {
   try {
-    await auth.deleteUser(uid);
+    const user = await auth.getUserByEmail(email);
+    const result = await auth
+      .deleteUser(user.uid)
+      .then(() => db.collection("users").doc(id).delete());
+    return result;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -49,7 +59,7 @@ const getAllUsers = async () => {
   try {
     return await auth.listUsers();
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

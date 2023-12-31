@@ -57,10 +57,11 @@ const createDockMiddleware = async (req, res, next) => {
 };
 
 const deleteImage = (id, name) => {
-  const imagePath = "./assets/" + id + "/" + name;
+  const imagePath = `./assets/${id}/${name}`;
+
   fs.unlink(imagePath, (err) => {
     if (err) {
-      throw ("Error deleting file:", err);
+      console.error("Error deleting file:", err);
     } else {
       console.log("File deleted successfully");
     }

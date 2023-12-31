@@ -7,36 +7,44 @@ const {
   getAllUsers,
 } = require("../services/firebase/index");
 
-router.get("/test", verifyToken, async (req, res) => {
-  res.send("ok").status(200);
-});
-
 router.post("/new_user", verifyToken, async (req, res) => {
   try {
-    const { email, pass } = req.body.data;
-    await createUser(email, pass);
-    res.send("ok").status(200);
+    const { email, pass, name } = req.body.data;
+
+    const createUserResult = await createUser(email, pass, name);
+    if (createUserResult) {
+      res.send("ok").status(200);
+    } else {
+      res.send("chyba").status(205);
+    }
   } catch (error) {
     console.log(error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 router.delete("/delete_user", verifyToken, async (req, res) => {
-  const uid = req.body.uid;
+  const { id, email } = req.query;
+
   try {
-    await deleteUser(uid);
-    res.send("ok").status(200);
+    const result = await deleteUser(id, email);
+
+    if (result) {
+      res.status(200).send("ok");
+    } else {
+      res.status(205).send("chyba");
+    }
   } catch (error) {
-    res.send("error", error).status(400);
+    res.status(400).send(error.message || "Bad Request");
   }
 });
 
 router.get("/get_all_users", verifyToken, async (req, res) => {
   try {
     const users = await getAllUsers();
-    res.send(users).status(200);
+    res.status(200).send(users);
   } catch (error) {
-    res.send("error", error).status(400);
+    res.status(400).send(error.message || "Bad Request");
   }
 });
 
