@@ -1,5 +1,6 @@
 const express = require("express");
 var cors = require("cors");
+require("dotenv").config();
 const app = express();
 const file = require("./controllers/file");
 const firebaseRouter = require("./controllers/firebase");
@@ -10,9 +11,7 @@ app.use("/assets", express.static(__dirname + "/assets"));
 app.use("/firebase", firebaseRouter);
 app.use("/file", file);
 const port = 8080;
-
 app.get("/", (req, res) => {
-  console.log(req.body);
   res.status(200).send("hello");
 });
 

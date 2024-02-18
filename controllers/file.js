@@ -29,7 +29,7 @@ router.post(
 
       res.status(200).send("ok");
     } catch (error) {
-      console.error(error);
+      console.error("Error uploading image:", error);
       res.status(500).send("Internal Server Error");
     }
   }
@@ -45,7 +45,8 @@ router.post(
       await createMultiDocs(req.query.key, req.files);
       res.send("ok").status(200);
     } catch (error) {
-      throw error;
+      console.error("Error uploading image:", error);
+      res.status(500).send("Internal Server Error");
     }
   }
 );
@@ -67,7 +68,8 @@ router.get("/download/:filename", (req, res) => {
       }
     );
   } catch (error) {
-    console.log(error);
+    console.error("Error downloading image:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -81,7 +83,8 @@ router.delete("/deleteImage", verifyToken, async (req, res) => {
     await deleteImageFb(id, idDoc);
     res.status(200).send("Image deleted successfully");
   } catch (error) {
-    throw error;
+    console.error("Error deleting image:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -93,7 +96,8 @@ router.delete("/deleteProduct", verifyToken, async (req, res) => {
     await deleteProductFb(id);
     res.status(200).send("Image deleted successfully");
   } catch (error) {
-    throw error;
+    console.error("Error deleting product:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 

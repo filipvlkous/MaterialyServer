@@ -18,7 +18,7 @@ router.post("/new_user", verifyToken, async (req, res) => {
       res.send("chyba").status(205);
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error new user:", error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -35,7 +35,8 @@ router.delete("/delete_user", verifyToken, async (req, res) => {
       res.status(205).send("chyba");
     }
   } catch (error) {
-    res.status(400).send(error.message || "Bad Request");
+    console.error("Error deleting user:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -44,7 +45,8 @@ router.get("/get_all_users", verifyToken, async (req, res) => {
     const users = await getAllUsers();
     res.status(200).send(users);
   } catch (error) {
-    res.status(400).send(error.message || "Bad Request");
+    console.error("Error getting all users:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
