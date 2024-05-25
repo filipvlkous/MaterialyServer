@@ -1,5 +1,5 @@
 const admin = require("firebase-admin");
-const sdk = require("../../firebaseAdmin.json");
+// const sdk = require("../../firebaseAdmin.json");
 console.log(process.env.TYPE);
 
 admin.initializeApp({
